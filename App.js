@@ -1,38 +1,30 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { render } from 'react-dom';
-import { StyleSheet, Text, View } from 'react-native';
-
-import Header from './src/components/Header';
-
-import axios from 'axios';
-
-export default class App extends React.Component {
-
-  renderList() {
-    // const textElements = names.map(name => {
-    //   return <Text key={name}>{name}</Text>
-    // })
-    // return textElements;
-
-    axios
-      .get('https://randomuser.me/api/?nat=br&results=5')
-      .then(response => {
-        const { results } = response.data;
-        const names = results.map(people => people.name.first);
-        console.log(names);
-      })
-
-  }
+import { createStackNavigator } from '@react-navigation/stack';
+import { NavigationContainer } from '@react-navigation/native';
 
 
-  render() {
-    return (
-      <View >
-        <Header title='Pessoas!' />
-        {this.renderList()}
-      </View>
-    );
-  }
+import HomeScreen from './src/pages/PeoplePage';
+
+const Stack = createStackNavigator();
+
+function HomeStacknavigation() {
+  return (
+    <NavigationContainer independent={true}>
+      <Stack.Navigator initialRoutName="Main" headerMode='nome'>
+        <Stack.Screen name="Main" component={HomeScreen}/>
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
 }
+
+
+// const AppNavigator = createStackNavigator({
+//   'Main':{
+//     screen: PeoplePage 
+//   }
+// })
+
+// const AppContainer = createAppContainer(StackNavigator);
+
+
+export default HomeStacknavigation;
 
